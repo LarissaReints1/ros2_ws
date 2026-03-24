@@ -1,0 +1,14 @@
+pan_tilt_position_controller:
+  ros__parameters:
+    type: joint_trajectory_controller/JointTrajectoryController
+    joints:
+      - pan_joint
+      - tilt_joint
+    gains:
+      pan_joint: { p: 10.0, d: 0.0, i: 0.0 }
+      tilt_joint: { p: 10.0, d: 0.0, i: 0.0 }
+    state_publish_rate: 50
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position

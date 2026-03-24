@@ -1,0 +1,147 @@
+<?xml version="1.0" ?>
+<sdf version='1.7'>
+  <model name='agridrone'>
+
+    <!-- BASE LINK -->
+    <link name='base_link'>
+      <inertial>
+        <pose>0.001094 0.042996 -0.028573 0 0 0</pose>
+        <mass>6.03612</mass>
+        <inertia>
+          <ixx>0.170494</ixx>
+          <ixy>-3.80395e-06</ixy>
+          <ixz>1.97237e-06</ixz>
+          <iyy>0.0943149</iyy>
+          <iyz>-0.0003987</iyz>
+          <izz>0.222721</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh><scale>1 1 1</scale><uri>base_link.STL</uri></mesh>
+        </geometry>
+      </collision>
+      <visual name='base_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh><scale>1 1 1</scale><uri>base_link.STL</uri></mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- CAMERA LINK -->
+    <link name='camera_link'>
+      <pose>0 0.675 0.026 0 0 0</pose>
+      <visual name='camera_visual'>
+        <geometry><mesh><scale>1 1 1</scale><uri>camera_link.STL</uri></mesh></geometry>
+      </visual>
+      <collision name='camera_collision'>
+        <geometry><mesh><scale>1 1 1</scale><uri>camera_link.STL</uri></mesh></geometry>
+      </collision>
+    </link>
+
+    <!-- FIXED JOINT BASE → CAMERA LINK -->
+    <joint name='camera_joint' type='fixed'>
+      <parent>base_link</parent>
+      <child>camera_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <!-- CAMERA SENSOR -->
+    <link name='camera_optical_frame'>
+      <sensor name='camera_sensor' type='camera'>
+        <pose>0 0.675 0.026 0 0 1.57</pose>
+        <camera>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+
+    <!-- FIXED JOINT CAMERA LINK → OPTICAL FRAME -->
+    <joint name='camera_optical_joint' type='fixed'>
+      <parent>camera_link</parent>
+      <child>camera_optical_frame</child>
+      <pose>0 0.675 0.026 0 0 1.57</pose>
+    </joint>
+
+
+    <!-- PAN LINK & JOINT -->
+    <joint name='pan_joint' type='revolute'>
+      <pose relative_to='base_link'>0 0.688054 -0.106439 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>pan_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit><lower>-1.5708</lower><upper>1.5708</upper><effort>10</effort><velocity>1</velocity></limit>
+        <dynamics><spring_reference>0</spring_reference><spring_stiffness>0</spring_stiffness></dynamics>
+      </axis>
+    </joint>
+    <link name='pan_link'>
+      <pose relative_to='pan_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.002947 0 -0.026966 0 0 0</pose>
+        <mass>0.0230764</mass>
+        <inertia>
+          <ixx>1.0088e-05</ixx><ixy>1.37469e-12</ixy><ixz>-1.42089e-08</ixz>
+          <iyy>1.06679e-05</iyy><iyz>4.73636e-12</iyz><izz>5.01259e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='pan_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry><mesh><scale>1 1 1</scale><uri>pan_link.STL</uri></mesh></geometry>
+      </collision>
+      <visual name='pan_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry><mesh><scale>1 1 1</scale><uri>pan_link.STL</uri></mesh></geometry>
+      </visual>
+    </link>
+
+    <!-- TILT LINK & JOINT -->
+    <joint name='tilt_joint' type='revolute'>
+      <pose relative_to='pan_link'>0 0 -0.03884 0 0 0</pose>
+      <parent>pan_link</parent>
+      <child>tilt_link</child>
+      <axis>
+        <xyz>-1 0 0</xyz>
+        <limit><lower>-1.5708</lower><upper>1.5708</upper><effort>10</effort><velocity>1</velocity></limit>
+        <dynamics><spring_reference>0</spring_reference><spring_stiffness>0</spring_stiffness></dynamics>
+      </axis>
+      
+    </joint>
+    <link name='tilt_link'>
+      <pose relative_to='tilt_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.004661 0.044209 -2.1e-05 0 0 0</pose>
+        <mass>0.0496658</mass>
+        <inertia>
+          <ixx>1.61418e-05</ixx><ixy>2.7906e-08</ixy><ixz>-3.89022e-09</ixz>
+          <iyy>2.3815e-05</iyy><iyz>2.44717e-08</iyz><izz>3.576e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='tilt_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry><mesh><scale>1 1 1</scale><uri>tilt_link.STL</uri></mesh></geometry>
+      </collision>
+      <visual name='tilt_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry><mesh><scale>1 1 1</scale><uri>tilt_link.STL</uri></mesh></geometry>
+      </visual>
+    </link>
+
+
+
+  </model>
+</sdf>

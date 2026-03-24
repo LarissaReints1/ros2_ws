@@ -1,0 +1,11 @@
+perception_node:
+  ros__parameters:
+    input_topic: "/camera/image_raw" #change if listening to ISAACSIM
+    use_dummy_target: true # true = dummy target, false = real camera
+    activate_filter: true # activate moving average filter
+    filter_size: 7 # size of moving average filter window
+    activate_depth: false
+    depth_fps: 15.0
+    detection_mode: "DL_TARGET"
+
+# colcon build --symlink-install to configure changed parameters

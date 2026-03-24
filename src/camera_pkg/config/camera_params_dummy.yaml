@@ -1,0 +1,12 @@
+cam2image_node:
+  ros__parameters:
+    camera_stream: true
+    stream_url: "http://192.168.1.113:8080/video" # ADD here stream URL from windows PC.
+    width: 640
+    height: 480
+    fps: 30
+    camera_type: "dummy"
+    flip_vertical: false
+    flip_horizontal: false
+
+## use colcon build --symlink-install to configure changed parameters

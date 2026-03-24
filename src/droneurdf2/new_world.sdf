@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+
+    <!-- Optional: add some environment elements -->
+
+
+    <!-- Include your URDF robot -->
+    <include>
+      <!-- Use absolute path if model:// fails -->
+      <uri>file://urdf/drone.urdf</uri>
+      <name>droneurdf23</name>
+      <!-- Optional initial pose -->
+      <pose>0 0 0.2 0 0 0</pose>
+    </include>
+
+  </world>
+</sdf>

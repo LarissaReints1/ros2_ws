@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rrbot" params="parent prefix *origin">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
+  <xacro:property name="width" value="0.2" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="height1" value="2" /> <!-- Link 1 -->
+  <xacro:property name="height2" value="1" /> <!-- Link 2 -->
+  <xacro:property name="height3" value="1" /> <!-- Link 3 -->
+  <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+
+  <joint name="${prefix}base_joint" type="fixed">
+    <xacro:insert_block name="origin" />
+    <parent link="${parent}"/>
+    <child link="${prefix}base_link" />
+  </joint>
+
+  <!-- Base Link -->
+  <link name="${prefix}base_link">
+    <inertial>
+      <origin
+        xyz="0.0011293326206765 0.0237572907186765 -0.0285573623278838"
+        rpy="0 0 0" />
+      <mass
+        value="5.86053330036656" />
+      <inertia
+        ixx="0.095822324169567"
+        ixy="-0.000141833714427708"
+        ixz="2.19294574317262E-06"
+        iyy="0.0942097463698701"
+        iyz="-0.00047567279662953"
+        izz="0.14804451113235" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+ 
+
+  <joint name="${prefix}pan_joint" type="continuous">
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}pan_link"/>
+    <origin
+      xyz="0 0.688053811513313 -0.106439267033973"
+      rpy="0 0 0" />
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.4"/>
+    <limit effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- Middle Link -->
+  <link name="${prefix}pan_link">
+   <inertial>
+      <origin
+        xyz="-0.00294705755680927 1.63761131322104E-08 -0.026965819182479"
+        rpy="0 0 0" />
+      <mass
+        value="0.0230763731325151" />
+      <inertia
+        ixx="1.00879617575775E-05"
+        ixy="1.37468609227006E-12"
+        ixz="-1.42088644525424E-08"
+        iyy="1.06678636320409E-05"
+        iyz="4.73635680809446E-12"
+        izz="5.01259453885722E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/pan_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/pan_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${prefix}tilt_joint" type="continuous">
+    <parent link="${prefix}pan_link"/>
+    <child link="${prefix}tilt_link"/>
+    <origin
+      xyz="0 0 -0.0388398108012811"
+      rpy="0 0 0" />
+    <axis xyz="-1 0 0"/>
+    <dynamics damping="0.4"/>
+    <limit effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- Top Link -->
+  <link name="${prefix}tilt_link">
+  <inertial>
+      <origin
+        xyz="0.00466100399165346 0.044208615968702 -2.14532923137611E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0496657978600844" />
+      <inertia
+        ixx="1.61417578186636E-05"
+        ixy="2.79060047311562E-08"
+        ixz="-3.89021960587608E-09"
+        iyy="2.38149653435665E-05"
+        iyz="2.44716834778596E-08"
+        izz="3.5760030966859E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/tilt_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/tilt_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${prefix}tool_joint" type="fixed">
+    <origin xyz="0 0 1" rpy="0 0 0" />
+    <parent link="${prefix}tilt_link"/>
+    <child link="${prefix}tool_link" />
+  </joint>
+
+  <!-- Tool Link -->
+  <link name="${prefix}tool_link">
+  </link>
+
+  <link name="ee_base_frame"/>
+
+  <joint name="ee_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="ee_base_frame"/>
+    <origin xyz="0 0.688053811513313 -0.14539267033973" rpy="0 0 0"/>
+  </joint>
+
+  </xacro:macro>
+
+</robot>

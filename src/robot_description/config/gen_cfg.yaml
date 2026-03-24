@@ -1,0 +1,5 @@
+# Environment
+env: empty_world.sdf # OPTIONS: rocky_world.sdf, test_world.sdf, lunar_rover_setup.sdf
+
+# Robot
+robot: robot.urdf.xacro # OPTIONS: rover_description.urdf.xacro, rover_description_caster_wheel.urdf.xacro

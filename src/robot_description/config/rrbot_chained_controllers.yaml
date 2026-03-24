@@ -1,0 +1,42 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 10 # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    pan_joint_position_controller:
+      type: passthrough_controller/PassthroughController
+
+    tilt_joint_position_controller:
+      type: passthrough_controller/PassthroughController
+
+    position_controller:
+      type: passthrough_controller/PassthroughController
+
+    forward_position_controller:
+      type: forward_command_controller/ForwardCommandController
+
+# First-level controllers
+pan_joint_position_controller:
+  ros__parameters:
+    interfaces: ["pan_joint/position"]
+
+tilt_joint_position_controller:
+  ros__parameters:
+    interfaces: ["tilt_joint/position"]
+
+# Second-level controller
+position_controller:
+  ros__parameters:
+    interfaces:
+      - pan_joint_position_controller/pan_joint/position
+      - tilt_joint_position_controller/tilt_joint/position
+
+# Third-level controllers
+forward_position_controller:
+  ros__parameters:
+    joints:
+      - position_controller/pan_joint_position_controller/pan_joint
+      - position_controller/tilt_joint_position_controller/tilt_joint
+    interface_name: position

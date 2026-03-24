@@ -1,0 +1,31 @@
+# Camera Info for Sony RX0 II
+###############################
+# Resolution: 1280x720 (HD)
+# Sensor: 1.0-type Exmor RS CMOS (13.2mm x 8.8mm), 3:2 aspect ratio
+# Lens: ZEISS Tessar T*, 7.9mm focal length, F4.0
+# Field of View: ~84 degrees (35mm equivalent 24mm)
+
+image_width: 1280
+image_height: 720
+
+camera_name: rx0_camera
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [766.0, 0.0, 640.0, 0.0, 766.0, 360.0, 0.0, 0.0, 1.0]
+
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [766.0, 0.0, 640.0, 0.0, 0.0, 766.0, 360.0, 0.0, 0.0, 0.0, 1.0, 0.0]

@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="droneurdf2">
+
+    <!-- Base link -->
+    <link name="base_link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>5.86053330036656</mass>
+        <inertia>
+          <ixx>0.095822324169567</ixx>
+          <ixy>-0.000141833714427708</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.0942097463698701</iyy>
+          <iyz>-0.00047567279662953</iyz>
+          <izz>0.14804451113235</izz>
+        </inertia>
+      </inertial>
+      <visual name="base_visual">
+        <geometry>
+          <mesh>
+            <uri>model://models/base_link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="base_collision">
+        <geometry>
+          <mesh>
+            <uri>model://models/base_link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Camera link -->
+    <link name="camera_link">
+      <pose>0 0.7 0.02 0 0 0</pose> <!-- adjust Z to place camera above base -->
+      <inertial>
+        <mass>0.175587717265154</mass>
+        <inertia>
+          <ixx>0.000101692885115253</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.000104799367062802</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.000106221244379781</izz>
+        </inertia>
+      </inertial>
+      <visual name="camera_visual">
+        <geometry>
+          <mesh>
+            <uri>model://models/camera_link.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="camera_collision">
+        <geometry>
+          <mesh>
+            <uri>model://models/camera_link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+
+      <!-- Camera sensor directly attached to camera_link -->
+      <sensor name="front_camera_sensor" type="camera">
+        <pose>0 0 0 0 0 0</pose>
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+
+    <!-- Fixed joint to attach camera_link to base_link -->
+    <joint name="camera_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>camera_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+  </model>
+</sdf>
