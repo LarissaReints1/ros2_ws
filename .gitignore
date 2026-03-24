@@ -1,0 +1,17 @@
+# ROS
+build/
+install/
+log/
+
+# ML / models
+*.onnx
+*.engine
+*.pt
+
+# rosbags
+*.db3
+rosbag2_*/
+
+# caches
+*.cache
+__pycache__/
