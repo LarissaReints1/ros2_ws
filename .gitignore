@@ -2,6 +2,7 @@
 build/
 install/
 log/
+pycuda/
 
 # ML / models
 *.onnx
