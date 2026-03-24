@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="agridrone">
+  <link name="world"/>
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0011293326206765 0.0237572907186765 -0.0285573623278838"
+        rpy="0 0 0" />
+      <mass
+        value="5.86053330036656" />
+      <inertia
+        ixx="0.095822324169567"
+        ixy="-0.000141833714427708"
+        ixz="2.19294574317262E-06"
+        iyy="0.0942097463698701"
+        iyz="-0.00047567279662953"
+        izz="0.14804451113235" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="pan_link">
+    <inertial>
+      <origin
+        xyz="-0.00294705755680927 1.63761131322104E-08 -0.026965819182479"
+        rpy="0 0 0" />
+      <mass
+        value="0.0230763731325151" />
+      <inertia
+        ixx="1.00879617575775E-05"
+        ixy="1.37468609227006E-12"
+        ixz="-1.42088644525424E-08"
+        iyy="1.06678636320409E-05"
+        iyz="4.73635680809446E-12"
+        izz="5.01259453885722E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/pan_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/pan_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="pan_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.688053811513313 -0.106439267033973"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="pan_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="1" />
+  </joint>
+  <link
+    name="tilt_link">
+    <inertial>
+      <origin
+        xyz="0.00466100399165346 0.044208615968702 -2.14532923137611E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0496657978600844" />
+      <inertia
+        ixx="1.61417578186636E-05"
+        ixy="2.79060047311562E-08"
+        ixz="-3.89021960587608E-09"
+        iyy="2.38149653435665E-05"
+        iyz="2.44716834778596E-08"
+        izz="3.5760030966859E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/tilt_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/tilt_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="tilt_joint"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.0388398108012811"
+      rpy="0 0 0" />
+    <parent
+      link="pan_link" />
+    <child
+      link="tilt_link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="10"
+      velocity="1" />
+  </joint>
+
+  <!-- Static frame at the pan-tilt base (does NOT rotate with pan) -->
+<link name="ee_base_frame"/>
+
+<joint name="ee_base_joint" type="fixed">
+  <parent link="base_link"/>
+  <child link="ee_base_frame"/>
+  <origin xyz="0 0.688053811513313 -0.14539267033973" rpy="0 0 0"/>
+</joint>
+ 
+  <link
+    name="camera_link">
+    <inertial>
+      <origin
+        xyz="-9.45196864550917E-05 0.0101274759764476 -0.055111598086541"
+        rpy="0 0 0" />
+      <mass
+        value="0.175587717265154" />
+      <inertia
+        ixx="0.000101692885115253"
+        ixy="3.99686622361317E-08"
+        ixz="-1.04941052197079E-07"
+        iyy="0.000104799367062802"
+        iyz="1.4482101836322E-05"
+        izz="0.000106221244379781" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/camera_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robot_description/models/agridrone/camera_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camera_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.675 0.026"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="camera_link" />
+  </joint>
+  <link name="camera_optical_frame"/>
+
+<joint name="camera_optical_joint" type="fixed">
+  <parent link="camera_link"/>
+  <child link="camera_optical_frame"/>
+  <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+</joint>
+<gazebo reference="camera_optical_frame">
+  <sensor type="camera" name="front_camera_sensor">
+    <camera>
+      <horizontal_fov>1.047</horizontal_fov>
+      <image>
+        <width>640</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+      <clip>
+        <near>0.1</near>
+        <far>100</far>
+      </clip>
+    </camera>
+    <update_rate>30</update_rate>
+    <always_on>true</always_on>
+    <visualize>true</visualize>
+  </sensor>
+</gazebo>
+<gazebo>
+  <plugin name="joint_state_broadcaster" filename="libgazebo_ros_joint_state_publisher.so">
+    <ros>
+      <namespace>/</namespace>
+    </ros>
+    <update_rate>50.0</update_rate>
+    <topic_name>/joint_states</topic_name>
+  </plugin>
+</gazebo>
+</robot>

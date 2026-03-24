@@ -1,0 +1,9 @@
+cam2image_node:
+  ros__parameters:
+    camera_type: "Jetson"
+    camera_stream: false
+    device: "0" # example Jetson camera URL check with : ls /dev/video*
+    camera_info_file: "info_rx0_camera_1280_720.yaml" #callibration file
+    fps: 25  # Max 25 
+    width: 1280
+    height: 720
